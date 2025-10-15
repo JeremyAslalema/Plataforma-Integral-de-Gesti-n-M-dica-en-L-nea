@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Integral de Gestión Médica en Línea</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Reset y Variables CSS */
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #8b5cf6;
+            --secondary: #06d6a0;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --darker: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #cbd5e1;
+            
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animaciones */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Fondo Animado */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--primary-light));
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        /* Container Principal */
+        .super-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Glass */
+        .glass-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .header-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section {
+            display: none;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .section.active {
+            display: block;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
+            padding: 2rem;
+        }
+
+        /* Auth Container */
+        .auth-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .card-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Demo Section */
+        .demo-section {
+            margin-bottom: 2rem;
+        }
+
+        .demo-section h3 {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .demo-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .demo-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .demo-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .demo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .demo-info p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .demo-badge {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--primary);
+            border-radius: 6px;
+            margin-top: 0.25rem;
+            display: inline-block;
+        }
+
+        /* Form Styles */
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-light);
+            z-index: 2;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid transparent;
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Buttons */
+        .btn {
+            position: relative;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--light);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Auth Footer */
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* Info Card */
+        .tech-stack {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .tech-tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--primary);
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .feature-item i {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        /* Dashboard */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            height: 80vh;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .user-profile {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 1rem;
+        }
+
+        .avatar {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+        }
+
+        .btn-logout {
+            width: 100%;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* Dashboard Main */
+        .dashboard-main {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .feature-section {
+            flex: 1;
+            background: var(--glass-bg);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+        }
+
+        /* Feature Styles */
+        .welcome-hero {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-box i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .action-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .action-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: none;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            display: flex;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .notification.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .notification.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        @media (max-width: 1024px) {
+            .auth-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-card {
+                display: none;
+            }
+            
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fondo Animado -->
+    <div class="background-animation">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Container Principal -->
+    <div class="super-container">
+        <!-- Header -->
+        <header class="glass-header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-heart-pulse"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>MediTech<span>Pro</span></h1>
+                        <p>Plataforma Médica Inteligente</p>
+                    </div>
+                </div>
+                <div class="header-badge">
+                    <span class="badge">v2.0</span>
+                    <span class="status-dot"></span>
+                    <span>Sistema Activo</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Sección Login -->
+            <div id="login-section" class="section active">
+                <div class="auth-container">
+                    <div class="auth-card glass-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-sign-in-alt"></i> Acceso al Sistema</h2>
+                            <p>Ingresa a la plataforma médica inteligente</p>
+                        </div>
+
+                        <!-- Cuentas Demo -->
+                        <div class="demo-section">
+                            <h3>🔮 Accesos Rápidos</h3>
+                            <div class="demo-grid">
+                                <div class="demo-card" data-email="paciente@demo.com" data-password="123456">
+                                    <div class="demo-icon">
+                                        <i class="fas fa-user-injured"></i>
+                                    </div>
+                                    <div class="demo-info">
+                                        <h4>Paciente Demo</h4>
+                                        <p>paciente@demo.com</p>
+                                        <span class="demo-badge">Usuario Estándar</span>
+                                    </div>
+                                </div>
+                                <div class="demo-card" data-email="doctor@demo.com" data-password="123456">
+                                    <div class="demo-icon">
+                                        <i class="fas fa-user-md"></i>
+                                    </div>
+                                    <div class="demo-info">
+                                        <h4>Doctor Demo</h4>
+                                        <p>doctor@demo.com</p>
+                                        <span class="demo-badge">Profesional</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Formulario Login -->
+                        <form id="login-form" class="auth-form">
+                            <div class="input-group">
+                                <div class="input-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <input type="email" id="email" placeholder="correo@ejemplo.com" value="paciente@demo.com" required>
+                            </div>
+
+                            <div class="input-group">
+                                <div class="input-icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <input type="password" id="password" placeholder="••••••••" value="123456" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                Acceder al Sistema
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </form>
+
+                        <div class="auth-footer">
+                            <p>¿Primera vez en la plataforma?</p>
+                            <button id="show-register" class="btn btn-ghost">
+                                <i class="fas fa-user-plus"></i>
+                                Crear Cuenta Premium
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Info Card -->
+                    <div class="info-card glass-card">
+                        <div class="info-header">
+                            <h3>🚀 Arquitectura Técnica</h3>
+                            <div class="tech-stack">
+                                <span class="tech-tag">Microservicios</span>
+                                <span class="tech-tag">API REST</span>
+                                <span class="tech-tag">WebSockets</span>
+                            </div>
+                        </div>
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <div>
+                                    <h4>Seguridad HIPAA</h4>
+                                    <p>Encriptación end-to-end</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-bolt"></i>
+                                <div>
+                                    <h4>Rendimiento</h4>
+                                    <p>Response time < 100ms</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <div>
+                                    <h4>Multiplataforma</h4>
+                                    <p>Responsive design</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Registro -->
+            <div id="register-section" class="section">
+                <div class="auth-container">
+                    <div class="auth-card glass-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-user-plus"></i> Crear Cuenta</h2>
+                            <p>Únete a nuestra plataforma médica</p>
+                        </div>
+
+                        <form id="register-form" class="auth-form">
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <div class="input-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <input type="text" id="firstName" placeholder="Nombre" required>
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <input type="text" id="lastName" placeholder="Apellido" required>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <div class="input-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <input type="email" id="reg-email" placeholder="correo@ejemplo.com" required>
+                            </div>
+
+                            <div class="input-group">
+                                <div class="input-icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <input type="password" id="reg-password" placeholder="••••••••" required>
+                            </div>
+
+                            <div class="input-group">
+                                <div class="input-icon">
+                                    <i class="fas fa-user-tag"></i>
+                                </div>
+                                <select id="role" required>
+                                    <option value="">Selecciona tu rol</option>
+                                    <option value="paciente">Paciente</option>
+                                    <option value="doctor">Médico</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                Crear Cuenta Premium
+                                <i class="fas fa-rocket"></i>
+                            </button>
+                        </form>
+
+                        <div class="auth-footer">
+                            <button id="show-login" class="btn btn-ghost">
+                                <i class="fas fa-arrow-left"></i>
+                                Volver al Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard -->
+            <div id="dashboard-section" class="section">
+                <div class="dashboard-container">
+                    <!-- Sidebar -->
+                    <div class="sidebar glass-card">
+                        <div class="user-profile">
+                            <div class="avatar" id="user-avatar">👤</div>
+                            <div class="user-info">
+                                <h3 id="user-name">Usuario</h3>
+                                <p id="user-role">Rol</p>
+                                <span class="user-status">Conectado</span>
+                            </div>
+                        </div>
+
+                        <nav class="sidebar-nav">
+                            <a class="nav-item active" data-feature="welcome">
+                                <i class="fas fa-home"></i>
+                                <span>Inicio</span>
+                            </a>
+                            <a class="nav-item" data-feature="perfil">
+                                <i class="fas fa-user-cog"></i>
+                                <span>Mi Perfil</span>
+                            </a>
+                            <a class="nav-item" data-feature="citas">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>Citas</span>
+                            </a>
+                        </nav>
+
+                        <div class="sidebar-footer">
+                            <button id="logout-btn" class="btn btn-logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Cerrar Sesión
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard -->
+                    <div class="dashboard-main">
+                        <div class="dashboard-header">
+                            <div class="header-left">
+                                <h2 id="dashboard-title">Bienvenido al Dashboard</h2>
+                                <p id="dashboard-subtitle">Sistema de gestión médica integral</p>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-content">
+                            <div id="feature-section" class="feature-section">
+                                <!-- Contenido dinámico -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <i class="notification-icon fas fa-check-circle"></i>
+        <span class="notification-message"></span>
+    </div>
+
+    <script>
+        class MedicalPlatform {
+            constructor() {
+                this.currentUser = null;
+                this.users = {
+                    'paciente@demo.com': {
+                        email: 'paciente@demo.com',
+                        password: '123456',
+                        role: 'paciente',
+                        firstName: 'Ana',
+                        lastName: 'García',
+                        avatar: '👩‍💼'
+                    },
+                    'doctor@demo.com': {
+                        email: 'doctor@demo.com',
+                        password: '123456',
+                        role: 'doctor',
+                        firstName: 'Dr. Carlos',
+                        lastName: 'Martínez',
+                        avatar: '👨‍⚕️'
+                    }
+                };
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                document.getElementById('show-register').addEventListener('click', () => this.showSection('register'));
+                document.getElementById('show-login').addEventListener('click', () => this.showSection('login'));
+                document.getElementById('login-form').addEventListener('submit', (e) => this.handleLogin(e));
+                document.getElementById('register-form').addEventListener('submit', (e) => this.handleRegister(e));
+                document.getElementById('logout-btn').addEventListener('click', () => this.handleLogout());
+                
+                document.querySelectorAll('.demo-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        document.getElementById('email').value = card.dataset.email;
+                        document.getElementById('password').value = card.dataset.password;
+                        this.showNotification('Credenciales cargadas ✅', 'success');
+                    });
+                });
+
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                        item.classList.add('active');
+                        this.showFeature(item.dataset.feature);
+                    });
+                });
+            }
+
+            showSection(sectionName) {
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(`${sectionName}-section`).classList.add('active');
+            }
+
+            handleLogin(e) {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                const user = this.users[email];
+                
+                if (user && user.password === password) {
+                    this.currentUser = user;
+                    this.showDashboard();
+                    this.showNotification(`¡Bienvenido ${user.firstName}! 🎉`, 'success');
+                } else {
+                    this.showNotification('Credenciales incorrectas. Usa las cuentas de demo.', 'error');
+                }
+            }
+
+            handleRegister(e) {
+                e.preventDefault();
+                const email = document.getElementById('reg-email').value;
+                const password = document.getElementById('reg-password').value;
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const role = document.getElementById('role').value;
+
+                if (this.users[email]) {
+                    this.showNotification('El usuario ya existe', 'error');
+                } else {
+                    const newUser = {
+                        email,
+                        password,
+                        firstName,
+                        lastName,
+                        role,
+                        avatar: role === 'doctor' ? '👨‍⚕️' : '👩‍💼'
+                    };
+                    this.users[email] = newUser;
+                    this.currentUser = newUser;
+                    this.showDashboard();
+                    this.showNotification(`¡Cuenta creada! Bienvenido ${firstName} 🚀`, 'success');
+                }
+            }
+
+            showDashboard() {
+                const user = this.currentUser;
+                
+                if (user) {
+                    document.getElementById('user-name').textContent = `${user.firstName} ${user.lastName}`;
+                    document.getElementById('user-role').textContent = user.role === 'doctor' ? 'Médico' : 'Paciente';
+                    document.getElementById('user-avatar').textContent = user.avatar;
+                    
+                    this.showSection('dashboard');
+                    this.showFeature('welcome');
+                }
+            }
+
+            showFeature(feature) {
+                const featureSection = document.getElementById('feature-section');
+                const features = {
+                    welcome: this.getWelcomeFeature(),
+                    perfil: this.getProfileFeature(),
+                    citas: this.getAppointmentsFeature()
+                };
+
+                featureSection.innerHTML = features[feature] || this.getWelcomeFeature();
+                
+                const titles = {
+                    welcome: 'Dashboard Principal',
+                    perfil: 'Gestión de Perfil',
+                    citas: 'Sistema de Citas'
+                };
+                
+                document.getElementById('dashboard-title').textContent = titles[feature];
+            }
+
+            getWelcomeFeature() {
+                return `
+                    <div class="welcome-hero">
+                        <div class="hero-icon">🚀</div>
+                        <h2>¡Bienvenido al Futuro de la Medicina!</h2>
+                        <p>Tu plataforma médica inteligente está lista para usar</p>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <i class="fas fa-bolt"></i>
+                            <h3>Rendimiento</h3>
+                            <p>99.9% Uptime</p>
+                        </div>
+                        <div class="stat-box">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Seguridad</h3>
+                            <p>Encriptación AES-256</p>
+                        </div>
+                        <div class="stat-box">
+                            <i class="fas fa-users"></i>
+                            <h3>Usuarios</h3>
+                            <p>10K+ Activos</p>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <h3>Acciones Rápidas</h3>
+                        <div class="actions-grid">
+                            <div class="action-card">
+                                <i class="fas fa-calendar-plus"></i>
+                                <span>Nueva Cita</span>
+                            </div>
+                            <div class="action-card">
+                                <i class="fas fa-file-medical"></i>
+                                <span>Ver Historial</span>
+                            </div>
+                            <div class="action-card">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Reportes</span>
+                            </div>
+                            <div class="action-card">
+                                <i class="fas fa-cog"></i>
+                                <span>Configuración</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            getProfileFeature() {
+                return `
+                    <h2><i class="fas fa-user-cog"></i> Mi Perfil</h2>
+                    <div class="profile-grid">
+                        <div class="stat-box">
+                            <h3>Información Personal</h3>
+                            <p><strong>Nombre:</strong> ${this.currentUser.firstName} ${this.currentUser.lastName}</p>
+                            <p><strong>Email:</strong> ${this.currentUser.email}</p>
+                            <p><strong>Rol:</strong> ${this.currentUser.role}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            getAppointmentsFeature() {
+                return `
+                    <h2><i class="fas fa-calendar-check"></i> Sistema de Citas</h2>
+                    <p>Gestión inteligente de citas médicas en tiempo real</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <i class="fas fa-clock"></i>
+                            <h3>Próximas Citas</h3>
+                            <p>5 programadas</p>
+                        </div>
+                        <div class="stat-box">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Completadas</h3>
+                            <p>12 este mes</p>
+                        </div>
+                        <div class="stat-box">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h3>Disponibilidad</h3>
+                            <p>Horarios abiertos</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            handleLogout() {
+                this.currentUser = null;
+                this.showSection('login');
+                this.showNotification('Sesión cerrada exitosamente 👋', 'success');
+            }
+
+            showNotification(message, type) {
+                const notification = document.getElementById('notification');
+                const icon = notification.querySelector('.notification-icon');
+                const messageEl = notification.querySelector('.notification-message');
+                
+                notification.className = `notification ${type}`;
+                icon.className = `notification-icon fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}`;
+                messageEl.textContent = message;
+                
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new MedicalPlatform();
+        });
+    </script>
+</body>
+</html>
