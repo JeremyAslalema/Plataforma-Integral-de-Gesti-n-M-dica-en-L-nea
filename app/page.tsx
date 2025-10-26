@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -103,16 +104,22 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-              <button className="group relative bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
+              <Link 
+                href="/auth/login?tipo=paciente"
+                className="group relative bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2"
+              >
                 <span className="text-xl">👤</span>
                 Soy Paciente
                 <span className="inline-block group-hover:translate-x-1 transition-transform">→</span>
-              </button>
-              <button className="group relative bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
+              </Link>
+              <Link 
+                href="/auth/login?tipo=profesional" 
+                className="group relative bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2"
+              >
                 <span className="text-xl">🩺</span>
                 Soy Profesional
                 <span className="inline-block group-hover:translate-x-1 transition-transform">→</span>
-              </button>
+              </Link>
             </div>
 
             {/* Stats */}
@@ -259,9 +266,12 @@ export default function Home() {
           <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
             Únete a miles de usuarios que ya transformaron su experiencia médica
           </p>
-          <button className="bg-white text-blue-600 px-10 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 hover:scale-105">
+          <Link 
+            href="/auth/login"
+            className="inline-block bg-white text-blue-600 px-10 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 hover:scale-105"
+          >
             Crear cuenta gratis
-          </button>
+          </Link>
         </div>
       </section>
     </main>
