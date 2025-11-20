@@ -36,40 +36,53 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
-C:.
-│   favicon.ico
-│   globals.css
-│   layout.tsx
-│   page.tsx
-│   
-├───auth
-│   │   layout.tsx
-│   │   
-│   ├───login
-│   │       page.tsx
-│   │
-│   └───register
-│           page.tsx
-│
-├───componets
-│   ├───forms
-│   │       login-form.tsx
-│   │       register-form.tsx
-│   │
-│   ├───layout
-│   │       footer.tsx
-│   │       header.tsx
-│   │
-│   └───ui
-│           button.tsx
-│           card.tsx
-│           input.tsx
-│
-└───dashboard
-    │   layout.tsx
-    │
-    ├───paciente
-    │       page.tsx
-    │
-    └───profesional
-            page.tsx
+plataforma-medica/
+├── 📁 app/                          # Next.js App Router
+│   ├── 📁 api/
+│   │   └── 📁 auth/
+│   │       └── 📁 [...nextauth]/
+│   │           └── 📄 route.ts      # API NextAuth
+├── 📁 lib/                         # Utilidades y configuraciones
+│   |   |── 📄 auth.ts                  # Configuración NextAuth
+│   │   |── 📄 prisma.ts                # Cliente de Prisma
+│   ├── 📁 auth/                     # Páginas de autenticación
+│   │   ├── 📁 login/
+│   │   │   └── 📄 page.tsx          # Página de login
+│   │   ├── 📁 register/
+│   │   │   └── 📄 page.tsx          # Página de registro
+│   │   └── 📄 layout.tsx            # Layout de auth
+│   ├── 📁 componets/                # Componentes (typo: debería ser "components")
+│   │   ├── 📁 forms/
+│   │   │   ├── 📄 login-form.tsx
+│   │   │   └── 📄 register-form.tsx
+│   │   ├── 📁 layout/
+│   │   │   ├── 📄 footer.tsx
+│   │   │   └── 📄 header.tsx
+│   │   └── 📁 ui/
+│   │       ├── 📄 button.tsx
+│   │       ├── 📄 card.tsx
+│   │       └── 📄 input.tsx
+│   ├── 📁 dashboard/                # Área privada
+│   │   ├── 📁 paciente/
+│   │   │   └── 📄 page.tsx
+│   │   ├── 📁 profesional/
+│   │   │   └── 📄 page.tsx
+│   │   └── 📄 layout.tsx
+│   ├── 📄 favicon.ico
+│   ├── 📄 globals.css              # Estilos globales
+│   ├── 📄 layout.tsx               # Layout principal
+│   └── 📄 page.tsx                 # Página principal
+├── 📁 node_modules/
+├── 📁 prisma/                      # Configuración de base de datos
+│   └── 📄 schema.prisma            # Modelos de BD
+├── 📁 public/                      # Archivos estáticos
+├── 📄 .env                         # Variables de entorno
+├── 📄 .gitignore
+├── 📄 eslint.config.mjs
+├── 📄 next-env.d.ts
+├── 📄 next.config.ts
+├── 📄 package-lock.json
+├── 📄 package.json
+├── 📄 postcss.config.mjs
+├── 📄 README.md
+└── 📄 tsconfig.json
