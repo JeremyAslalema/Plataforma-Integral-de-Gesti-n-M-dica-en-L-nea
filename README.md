@@ -40,21 +40,20 @@ plataforma-medica/
 ├── 📁 app/                          # Next.js App Router
 │   ├── 📁 api/
 │   │   └── 📁 auth/
-│   │       └── 📁 [...nextauth]/
-│   │           └── 📄 route.ts      # API NextAuth
-├── 📁 lib/                         # Utilidades y configuraciones
-│   |   |── 📄 auth.ts                  # Configuración NextAuth
-│   │   |── 📄 prisma.ts                # Cliente de Prisma
+│   │       ├── 📁 [...nextauth]/
+│   │       │   └── 📄 route.ts      # API NextAuth
+│   │       └── 📁 register/
+│   │           └── 📄 route.ts      # API Registro
 │   ├── 📁 auth/                     # Páginas de autenticación
 │   │   ├── 📁 login/
-│   │   │   └── 📄 page.tsx          # Página de login
+│   │   │   └── 📄 page.tsx          # Página de login (ACTUALIZADO)
 │   │   ├── 📁 register/
-│   │   │   └── 📄 page.tsx          # Página de registro
-│   │   └── 📄 layout.tsx            # Layout de auth
-│   ├── 📁 componets/                # Componentes (typo: debería ser "components")
+│   │   │   └── 📄 page.tsx          # Página de registro (ACTUALIZADO)
+│   │   └── 📄 layout.tsx
+│   ├── 📁 componets/                # Componentes
 │   │   ├── 📁 forms/
-│   │   │   ├── 📄 login-form.tsx
-│   │   │   └── 📄 register-form.tsx
+│   │   │   ├── 📄 login-form.tsx    # COMPLETADO
+│   │   │   └── 📄 register-form.tsx # COMPLETADO
 │   │   ├── 📁 layout/
 │   │   │   ├── 📄 footer.tsx
 │   │   │   └── 📄 header.tsx
@@ -68,15 +67,18 @@ plataforma-medica/
 │   │   ├── 📁 profesional/
 │   │   │   └── 📄 page.tsx
 │   │   └── 📄 layout.tsx
+│   ├── 📁 lib/                      # Utilidades
+│   │   ├── 📄 auth.ts               # ACTUALIZADO (NextAuth config)
+│   │   └── 📄 prisma.ts             # Cliente Prisma
 │   ├── 📄 favicon.ico
-│   ├── 📄 globals.css              # Estilos globales
-│   ├── 📄 layout.tsx               # Layout principal
-│   └── 📄 page.tsx                 # Página principal
+│   ├── 📄 globals.css
+│   ├── 📄 layout.tsx
+│   └── 📄 page.tsx
 ├── 📁 node_modules/
-├── 📁 prisma/                      # Configuración de base de datos
-│   └── 📄 schema.prisma            # Modelos de BD
-├── 📁 public/                      # Archivos estáticos
-├── 📄 .env                         # Variables de entorno
+├── 📁 prisma/                       # Base de datos
+│   └── 📄 schema.prisma             # Modelo User
+├── 📁 public/
+├── 📄 .env                          # Variables: DATABASE_URL, NEXTAUTH_SECRET
 ├── 📄 .gitignore
 ├── 📄 eslint.config.mjs
 ├── 📄 next-env.d.ts
