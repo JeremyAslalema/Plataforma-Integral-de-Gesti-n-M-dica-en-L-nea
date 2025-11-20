@@ -1,4 +1,4 @@
-// lib/prisma.ts
+// app/lib/prisma.ts - Asegurar que exporte correctamente
 import { PrismaClient } from '@prisma/client'
 
 const globalForPrisma = globalThis as unknown as {

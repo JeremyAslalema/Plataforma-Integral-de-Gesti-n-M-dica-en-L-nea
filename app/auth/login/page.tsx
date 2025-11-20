@@ -1,8 +1,12 @@
+// app/auth/login/page.tsx
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -10,6 +14,7 @@ export default function LoginPage() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -17,18 +22,35 @@ export default function LoginPage() {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+    setError(''); // Limpiar error al cambiar
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     setIsLoading(true);
     
-    // Simular login
-    setTimeout(() => {
-      console.log('Login attempt:', formData);
+    try {
+      // Usar NextAuth para el login
+      const result = await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError('Credenciales inválidas. Verifica tu email y contraseña.');
+      } else {
+        // Login exitoso - redirigir al dashboard
+        alert('¡Inicio de sesión exitoso!');
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      setError('Error de conexión. Intenta nuevamente.');
+      console.error('Login error:', error);
+    } finally {
       setIsLoading(false);
-      // Aquí iría la lógica real de autenticación
-    }, 1500);
+    }
   };
 
   return (
@@ -56,6 +78,13 @@ export default function LoginPage() {
             </Link>
           </p>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+            <p className="text-red-700 text-sm">{error}</p>
+          </div>
+        )}
 
         {/* Login Form */}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>

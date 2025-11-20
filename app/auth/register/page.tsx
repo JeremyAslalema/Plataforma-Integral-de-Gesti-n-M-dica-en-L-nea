@@ -1,8 +1,11 @@
+// app/auth/register/page.tsx
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -14,6 +17,7 @@ export default function RegisterPage() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -23,30 +27,62 @@ export default function RegisterPage() {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+    setError(''); // Limpiar error al cambiar
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     
     // Validaciones básicas
     if (formData.password !== formData.confirmPassword) {
-      alert('Las contraseñas no coinciden');
+      setError('Las contraseñas no coinciden');
       return;
     }
 
     if (!formData.aceptaTerminos) {
-      alert('Debes aceptar los términos y condiciones');
+      setError('Debes aceptar los términos y condiciones');
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError('La contraseña debe tener al menos 6 caracteres');
       return;
     }
 
     setIsLoading(true);
     
-    // Simular registro
-    setTimeout(() => {
-      console.log('Registro attempt:', formData);
+    try {
+      // Preparar datos para la API
+      const userData = {
+        name: `${formData.nombre} ${formData.apellido}`.trim(),
+        email: formData.email,
+        password: formData.password,
+        role: formData.tipoUsuario === 'profesional' ? 'DOCTOR' : 'PACIENTE'
+      };
+
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('¡Registro exitoso! Serás redirigido al login.');
+        router.push('/auth/login');
+      } else {
+        setError(data.error || 'Error en el registro');
+      }
+    } catch (error) {
+      setError('Error de conexión. Intenta nuevamente.');
+      console.error('Register error:', error);
+    } finally {
       setIsLoading(false);
-      // Aquí iría la lógica real de registro
-    }, 1500);
+    }
   };
 
   return (
@@ -74,6 +110,13 @@ export default function RegisterPage() {
             </Link>
           </p>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+            <p className="text-red-700 text-sm">{error}</p>
+          </div>
+        )}
 
         {/* Register Form */}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -161,7 +204,8 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                  placeholder="••••••••"
+                  placeholder="Mínimo 6 caracteres"
+                  minLength={6}
                 />
               </div>
               <div>
@@ -176,7 +220,7 @@ export default function RegisterPage() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                  placeholder="••••••••"
+                  placeholder="Repite tu contraseña"
                 />
               </div>
             </div>
@@ -231,34 +275,6 @@ export default function RegisterPage() {
                 'Crear Cuenta'
               )}
             </button>
-
-            {/* Divider */}
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">O registrarse con</span>
-              </div>
-            </div>
-
-            {/* Social Register */}
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                className="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                <span className="text-blue-600 text-lg mr-2">f</span>
-                Facebook
-              </button>
-              <button
-                type="button"
-                className="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                <span className="text-red-600 text-lg mr-2">G</span>
-                Google
-              </button>
-            </div>
           </div>
         </form>
       </div>
