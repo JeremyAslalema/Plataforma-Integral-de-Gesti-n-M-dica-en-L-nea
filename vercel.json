@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npx prisma generate && next build",
+  "buildCommand": "PRISMA_CLI_BINARY_TARGETS=debian-openssl-3.0.x,rhel-openssl-3.0.x npx prisma generate && next build",
   "installCommand": "npm install",
   "framework": "nextjs",
   "functions": {
@@ -8,7 +8,9 @@
       "maxDuration": 30
     }
   },
-  "env": {
-    "PRISMA_CLI_BINARY_TARGETS": "debian-openssl-3.0.x,rhel-openssl-3.0.x"
-  }
+  "includeFiles": [
+    "node_modules/.prisma/client/libquery_engine-rhel-openssl-3.0.x.so.node",
+    "node_modules/.prisma/client/libquery_engine-debian-openssl-3.0.x.so.node",
+    "node_modules/.prisma/client/query_engine-windows.dll.node"
+  ]
 }

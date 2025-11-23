@@ -89,4 +89,5 @@ plataforma-medica/
 ├── 📄 package.json
 ├── 📄 postcss.config.mjs
 ├── 📄 README.md
-└── 📄 tsconfig.json
+├── 📄 tsconfig.json
+└── 📄 vercel.json
