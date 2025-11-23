@@ -1,6 +1,8 @@
-// prisma/schema.prisma - CONTENIDO COMPLETO:
+// prisma/schema.prisma - CONTENIDO COMPLETO ACTUALIZADO:
 generator client {
   provider = "prisma-client-js"
+  engineType = "binary"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
