@@ -46,41 +46,43 @@ plataforma-medica/
 │   │           └── 📄 route.ts      # API Registro
 │   ├── 📁 auth/                     # Páginas de autenticación
 │   │   ├── 📁 login/
-│   │   │   └── 📄 page.tsx          # Página de login (ACTUALIZADO)
+│   │   │   └── 📄 page.tsx          # Página login
 │   │   ├── 📁 register/
-│   │   │   └── 📄 page.tsx          # Página de registro (ACTUALIZADO)
+│   │   │   └── 📄 page.tsx          # Página registro
 │   │   └── 📄 layout.tsx
-│   ├── 📁 componets/                # Componentes
+│   ├── 📁 components/               # Componentes
 │   │   ├── 📁 forms/
-│   │   │   ├── 📄 login-form.tsx    # COMPLETADO
-│   │   │   └── 📄 register-form.tsx # COMPLETADO
+│   │   │   ├── 📄 login-form.tsx    # Formulario login
+│   │   │   └── 📄 register-form.tsx # Formulario registro
 │   │   ├── 📁 layout/
 │   │   │   ├── 📄 footer.tsx
 │   │   │   └── 📄 header.tsx
-│   │   └── 📁 ui/
-│   │       ├── 📄 button.tsx
-│   │       ├── 📄 card.tsx
-│   │       └── 📄 input.tsx
-│   ├── 📁 dashboard/                # Área privada
+│   │   ├── 📁 ui/
+│   │   │   ├── 📄 button.tsx
+│   │   │   ├── 📄 card.tsx
+│   │   │   └── 📄 input.tsx
+│   │   └── 📄 session-provider.tsx  # Provider de sesiones
+│   ├── 📁 dashboard/                # Área privada (PROTEGIDA)
 │   │   ├── 📁 paciente/
 │   │   │   └── 📄 page.tsx
 │   │   ├── 📁 profesional/
 │   │   │   └── 📄 page.tsx
-│   │   └── 📄 layout.tsx
+│   │   └── 📄 page.tsx              # Dashboard principal
 │   ├── 📁 lib/                      # Utilidades
-│   │   ├── 📄 auth.ts               # ACTUALIZADO (NextAuth config)
+│   │   ├── 📄 auth.ts               # Configuración NextAuth
 │   │   └── 📄 prisma.ts             # Cliente Prisma
 │   ├── 📄 favicon.ico
 │   ├── 📄 globals.css
-│   ├── 📄 layout.tsx
-│   └── 📄 page.tsx
+│   ├── 📄 layout.tsx                # Layout con SessionProvider
+│   └── 📄 page.tsx                  # Página principal
 ├── 📁 node_modules/
 ├── 📁 prisma/                       # Base de datos
 │   └── 📄 schema.prisma             # Modelo User
 ├── 📁 public/
-├── 📄 .env                          # Variables: DATABASE_URL, NEXTAUTH_SECRET
+├── 📄 .env                          # Variables de entorno
 ├── 📄 .gitignore
 ├── 📄 eslint.config.mjs
+├── 📄 proxy.ts                      # ✅ PROTECCIÓN DE RUTAS (nueva)
 ├── 📄 next-env.d.ts
 ├── 📄 next.config.ts
 ├── 📄 package-lock.json

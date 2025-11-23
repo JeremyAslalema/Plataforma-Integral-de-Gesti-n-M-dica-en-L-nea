@@ -1,6 +1,8 @@
+// app/layout.tsx
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { SessionProvider } from './componets/session-provider';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -70,9 +72,11 @@ export default function RootLayout({
         className={`${inter.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
-        <div className="min-h-screen flex flex-col">
-          {children}
-        </div>
+        <SessionProvider>
+          <div className="min-h-screen flex flex-col">
+            {children}
+          </div>
+        </SessionProvider>
       </body>
     </html>
   );
