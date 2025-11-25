@@ -37,23 +37,24 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 plataforma-medica/
-├── 📁 app/                          # Next.js App Router
+├── 📁 .next/                         # Build de Next.js
+├── 📁 app/                           # Next.js App Router
 │   ├── 📁 api/
 │   │   └── 📁 auth/
 │   │       ├── 📁 [...nextauth]/
-│   │       │   └── 📄 route.ts      # API NextAuth
+│   │       │   └── 📄 route.ts
 │   │       └── 📁 register/
-│   │           └── 📄 route.ts      # API Registro
-│   ├── 📁 auth/                     # Páginas de autenticación
+│   │           └── 📄 route.ts
+│   ├── 📁 auth/
 │   │   ├── 📁 login/
-│   │   │   └── 📄 page.tsx          # Página login
+│   │   │   └── 📄 page.tsx
 │   │   ├── 📁 register/
-│   │   │   └── 📄 page.tsx          # Página registro
+│   │   │   └── 📄 page.tsx
 │   │   └── 📄 layout.tsx
-│   ├── 📁 components/               # Componentes
+│   ├── 📁 components/
 │   │   ├── 📁 forms/
-│   │   │   ├── 📄 login-form.tsx    # Formulario login
-│   │   │   └── 📄 register-form.tsx # Formulario registro
+│   │   │   ├── 📄 login-form.tsx
+│   │   │   └── 📄 register-form.tsx
 │   │   ├── 📁 layout/
 │   │   │   ├── 📄 footer.tsx
 │   │   │   └── 📄 header.tsx
@@ -61,33 +62,36 @@ plataforma-medica/
 │   │   │   ├── 📄 button.tsx
 │   │   │   ├── 📄 card.tsx
 │   │   │   └── 📄 input.tsx
-│   │   └── 📄 session-provider.tsx  # Provider de sesiones
-│   ├── 📁 dashboard/                # Área privada (PROTEGIDA)
+│   │   └── 📄 session-provider.tsx
+│   ├── 📁 dashboard/
 │   │   ├── 📁 paciente/
 │   │   │   └── 📄 page.tsx
 │   │   ├── 📁 profesional/
 │   │   │   └── 📄 page.tsx
-│   │   └── 📄 page.tsx              # Dashboard principal
-│   ├── 📁 lib/                      # Utilidades
-│   │   ├── 📄 auth.ts               # Configuración NextAuth
-│   │   └── 📄 prisma.ts             # Cliente Prisma
+│   │   └── 📄 page.tsx
+│   ├── 📁 lib/
+│   │   ├── 📄 auth.ts
+│   │   └── 📄 prisma.ts
 │   ├── 📄 favicon.ico
 │   ├── 📄 globals.css
-│   ├── 📄 layout.tsx                # Layout con SessionProvider
-│   └── 📄 page.tsx                  # Página principal
+│   ├── 📄 layout.tsx
+│   └── 📄 page.tsx
 ├── 📁 node_modules/
-├── 📁 prisma/                       # Base de datos
-│   └── 📄 schema.prisma             # Modelo User
-├── 📁 public/
-├── 📄 .env                          # Variables de entorno
+├── 📁 prisma/                        # Configuración de base de datos
+│   └── 📄 schema.prisma
+├── 📁 public/                        # Archivos estáticos
+├── 📁 scripts/                       # Scripts de build
+│   └── 📄 post-build.js
+├── 📄 .env                           # Variables de entorno locales
 ├── 📄 .gitignore
-├── 📄 eslint.config.mjs
-├── 📄 proxy.ts                      # ✅ PROTECCIÓN DE RUTAS (nueva)
-├── 📄 next-env.d.ts
-├── 📄 next.config.ts
+├── 📄 .vercelignore                  # Configuración Vercel
+├── 📄 eslint.config.mjs              # ESLint
+├── 📄 next-env.d.ts                  # Tipos Next.js
+├── 📄 next.config.ts                 # Configuración Next.js
 ├── 📄 package-lock.json
-├── 📄 package.json
-├── 📄 postcss.config.mjs
+├── 📄 package.json                   # Dependencias y scripts
+├── 📄 postcss.config.mjs             # PostCSS
+├── 📄 proxy.ts                       # Protección de rutas
 ├── 📄 README.md
-├── 📄 tsconfig.json
-└── 📄 vercel.json
+├── 📄 tsconfig.json                  # TypeScript
+└── 📄 vercel.json                    # Configuración Vercel
