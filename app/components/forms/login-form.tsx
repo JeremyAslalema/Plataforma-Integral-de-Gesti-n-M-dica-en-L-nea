@@ -1,4 +1,4 @@
-// app/componets/forms/login-form.tsx
+// app/components/forms/login-form.tsx
 'use client';
 
 import { useState } from 'react';

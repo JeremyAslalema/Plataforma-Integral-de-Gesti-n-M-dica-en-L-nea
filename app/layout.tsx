@@ -1,8 +1,7 @@
-// app/layout.tsx
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { SessionProvider } from './componets/session-provider';
+import { SessionProvider } from './components/session-provider'; // ← MANTIENE "componets"
 
 const inter = Inter({ 
   subsets: ['latin'],

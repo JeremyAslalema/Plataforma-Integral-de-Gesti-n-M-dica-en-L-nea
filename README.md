@@ -80,14 +80,12 @@ plataforma-medica/
 ├── 📁 prisma/                        # Configuración de base de datos
 │   └── 📄 schema.prisma
 ├── 📁 public/                        # Archivos estáticos
-├── 📁 scripts/                       # Scripts de build
-│   └── 📄 post-build.js
 ├── 📄 .env                           # Variables de entorno locales
 ├── 📄 .gitignore
 ├── 📄 .vercelignore                  # Configuración Vercel
 ├── 📄 eslint.config.mjs              # ESLint
 ├── 📄 next-env.d.ts                  # Tipos Next.js
-├── 📄 next.config.ts                 # Configuración Next.js
+├── 📄 next.config.js                # Configuración Next.js
 ├── 📄 package-lock.json
 ├── 📄 package.json                   # Dependencias y scripts
 ├── 📄 postcss.config.mjs             # PostCSS

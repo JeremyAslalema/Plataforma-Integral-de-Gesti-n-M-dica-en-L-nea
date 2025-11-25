@@ -1,4 +1,4 @@
-// app/componets/forms/register-form.tsx
+// app/components/forms/register-form.tsx
 'use client';
 
 import { useState } from 'react';
