@@ -1,0 +1,37 @@
+# Ignorar todo por defecto
+*
+
+# Incluir estos archivos/directorios específicamente
+!.next/
+!public/
+!package.json
+!package-lock.json
+!next.config.*
+!*.json
+!*.js
+!*.ts
+
+# Incluir node_modules necesarios
+!node_modules/.prisma/**
+!node_modules/@prisma/**
+!node_modules/next/**
+!node_modules/react/**
+!node_modules/react-dom/**
+!node_modules/.bin/prisma*
+!node_modules/webpack/**
+!node_modules/next-auth/**
+
+# Incluir scripts
+!scripts/**
+
+# Incluir Prisma schema
+!prisma/**
+
+# Excluir archivos de desarrollo
+.eslintrc.*
+.gitignore
+README.md
+*.md
+.vscode/
+.idea/
+*.log

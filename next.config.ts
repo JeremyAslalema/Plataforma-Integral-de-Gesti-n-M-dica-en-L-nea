@@ -1,7 +1,11 @@
-// next.config.ts
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
+  
+  // ✅ CORREGIDO: Migrado a Next.js 16
+  serverExternalPackages: ['@prisma/client'],
+  
   webpack: (config, { isServer, webpack }) => {
     if (isServer) {
       config.plugins.push(
@@ -10,7 +14,6 @@ const nextConfig: NextConfig = {
         })
       );
 
-      // Forzar inclusión de archivos Prisma
       config.module = config.module || {};
       config.module.rules = config.module.rules || [];
       config.module.rules.push({
@@ -20,9 +23,11 @@ const nextConfig: NextConfig = {
     }
     return config;
   },
-  experimental: {
-    serverComponentsExternalPackages: ['@prisma/client'],
-  },
+
+  // ✅ AGREGAR: Configuración para Turbopack
+  turbopack: {},
+
+  // ❌ ELIMINADO: experimental.serverComponentsExternalPackages (obsoleto en Next.js 16)
 };
 
 export default nextConfig;

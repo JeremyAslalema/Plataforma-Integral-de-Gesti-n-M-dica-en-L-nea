@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "PRISMA_CLI_BINARY_TARGETS=debian-openssl-3.0.x,rhel-openssl-3.0.x npx prisma generate && next build",
-    "start": "next start",
+    "dev": "next dev --turbopack",
+    "build": "set PRISMA_CLI_BINARY_TARGETS=debian-openssl-3.0.x,rhel-openssl-3.0.x&& npx prisma generate&& next build&& node scripts/post-build.js",
+    "start": "node .next/standalone/server.js",
     "lint": "eslint",
-    "postinstall": "PRISMA_CLI_BINARY_TARGETS=debian-openssl-3.0.x,rhel-openssl-3.0.x npx prisma generate"
+    "postinstall": "set PRISMA_CLI_BINARY_TARGETS=debian-openssl-3.0.x,rhel-openssl-3.0.x&& npx prisma generate",
+    "vercel-build": "PRISMA_CLI_BINARY_TARGETS=debian-openssl-3.0.x,rhel-openssl-3.0.x npx prisma generate && next build && node scripts/post-build.js",
+    "db:push": "npx prisma db push",
+    "fix-prisma": "node scripts/post-build.js"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
