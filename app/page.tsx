@@ -10,42 +10,36 @@ export default function Home() {
       icon: "📅",
       title: "Gestión de Citas",
       description: "Agenda, modifica y cancela citas en tiempo real con confirmación instantánea",
-      color: "from-blue-500 to-blue-600",
       stats: "24/7 disponible"
     },
     {
       icon: "📊",
       title: "Historial Médico Digital",
       description: "Acceso seguro y cifrado a todos tus registros médicos desde cualquier dispositivo",
-      color: "from-green-500 to-green-600",
       stats: "100% seguro"
     },
     {
       icon: "💬",
       title: "Telemedicina",
       description: "Consultas virtuales con videollamada HD y chat en tiempo real",
-      color: "from-purple-500 to-purple-600",
       stats: "Respuesta rápida"
     },
     {
       icon: "❤️",
       title: "Monitoreo de Salud",
       description: "Seguimiento continuo de tus signos vitales y métricas de salud",
-      color: "from-red-500 to-red-600",
       stats: "Alertas automáticas"
     },
     {
       icon: "💊",
       title: "Recetas Electrónicas",
       description: "Prescripciones digitales verificadas y enviadas directamente a farmacias",
-      color: "from-orange-500 to-orange-600",
       stats: "Sin papel"
     },
     {
       icon: "👥",
       title: "Red de Especialistas",
       description: "Acceso a más de 1000+ profesionales certificados en todas las especialidades",
-      color: "from-teal-500 to-teal-600",
       stats: "1000+ médicos"
     }
   ];
@@ -73,111 +67,86 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <main>
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
-            backgroundSize: '20px 20px'
-          }}></div>
-        </div>
-        <div className="container mx-auto px-4 py-20 md:py-28 relative">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <span className="text-base">🏆</span>
-              Plataforma líder en salud digital
-            </div>
+      <section className="hero">
+        <div className="container">
+          <div className="hero-badge">
+            <span>🏆</span>
+            Plataforma líder en salud digital
+          </div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-              Tu salud,{' '}
-              <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                simplificada
-              </span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-              Conectamos pacientes y profesionales de la salud en un ecosistema digital seguro, 
-              eficiente y centrado en tu bienestar
-            </p>
+          <h1 className="hero-title">
+            Tu salud,{' '}
+            <span className="gradient-text">simplificada</span>
+          </h1>
+          
+          <p className="hero-subtitle">
+            Conectamos pacientes y profesionales de la salud en un ecosistema digital seguro, 
+            eficiente y centrado en tu bienestar
+          </p>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-              <Link 
-                href="/auth/login?tipo=paciente"
-                className="group relative bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                <span className="text-xl">👤</span>
-                Soy Paciente
-                <span className="inline-block group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
-              <Link 
-                href="/auth/login?tipo=profesional" 
-                className="group relative bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                <span className="text-xl">🩺</span>
-                Soy Profesional
-                <span className="inline-block group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
-            </div>
+          {/* CTA Buttons */}
+          <div className="cta-buttons">
+            <Link href="/auth/login?tipo=paciente" className="btn btn-primary">
+              <span>👤</span>
+              Soy Paciente
+              <span>→</span>
+            </Link>
+            <Link href="/auth/login?tipo=profesional" className="btn btn-secondary">
+              <span>🩺</span>
+              Soy Profesional
+              <span>→</span>
+            </Link>
+          </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
-              {[
-                { value: "50K+", label: "Pacientes activos" },
-                { value: "1000+", label: "Profesionales" },
-                { value: "99.9%", label: "Uptime" },
-                { value: "4.9/5", label: "Valoración" }
-              ].map((stat, idx) => (
-                <div key={idx} className="bg-white/80 backdrop-blur rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow">
-                  <div className="text-2xl md:text-3xl font-bold text-gray-900">{stat.value}</div>
-                  <div className="text-sm text-gray-600 mt-1">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+          {/* Stats */}
+          <div className="stats-grid">
+            {[
+              { value: "50K+", label: "Pacientes activos" },
+              { value: "1000+", label: "Profesionales" },
+              { value: "99.9%", label: "Uptime" },
+              { value: "4.9/5", label: "Valoración" }
+            ].map((stat, idx) => (
+              <div key={idx} className="stat-card fade-in-up">
+                <div className="stat-value">{stat.value}</div>
+                <div className="stat-label">{stat.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Todo lo que necesitas en un solo lugar
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+      <section className="features">
+        <div className="container">
+          <div className="section-header">
+            <h2 className="section-title">Todo lo que necesitas en un solo lugar</h2>
+            <p className="section-subtitle">
               Herramientas profesionales diseñadas para mejorar tu experiencia en salud
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="features-grid">
             {features.map((feature, idx) => (
               <div
                 key={idx}
+                className="feature-card fade-in-up"
                 onMouseEnter={() => setHoveredCard(idx)}
                 onMouseLeave={() => setHoveredCard(null)}
-                className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
               >
-                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${feature.color} text-white mb-6 text-3xl group-hover:scale-110 transition-transform duration-300`}>
+                <div className="feature-icon">
                   {feature.icon}
                 </div>
                 
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                  {feature.title}
-                </h3>
+                <h3 className="feature-title">{feature.title}</h3>
                 
-                <p className="text-gray-600 mb-4 leading-relaxed">
-                  {feature.description}
-                </p>
+                <p className="feature-description">{feature.description}</p>
 
-                <div className="flex items-center gap-2 text-sm font-medium text-gray-500">
-                  <span className="text-green-500">✓</span>
+                <div className="feature-stats">
+                  <span>✓</span>
                   {feature.stats}
                 </div>
-
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300`}></div>
               </div>
             ))}
           </div>
@@ -185,34 +154,32 @@ export default function Home() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-600 to-green-600 text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <section className="benefits">
+        <div className="container">
+          <div className="benefits-grid">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                ¿Por qué elegirnos?
-              </h2>
-              <p className="text-xl text-blue-100 mb-8">
+              <h2 className="benefits-title">¿Por qué elegirnos?</h2>
+              <p className="benefits-subtitle">
                 Transformamos la atención médica con tecnología de vanguardia y un enfoque humano
               </p>
-              <div className="space-y-4">
+              <ul className="benefits-list">
                 {benefits.map((benefit, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <span className="text-green-300 text-2xl flex-shrink-0">✓</span>
-                    <span className="text-lg">{benefit}</span>
-                  </div>
+                  <li key={idx} className="benefit-item">
+                    <span className="benefit-icon">✓</span>
+                    <span>{benefit}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
-              <div className="flex items-center gap-4 mb-6">
-                <span className="text-5xl">🕐</span>
+            <div className="benefit-card">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
+                <span style={{ fontSize: '3rem' }}>🕐</span>
                 <div>
-                  <div className="text-3xl font-bold">24/7</div>
-                  <div className="text-blue-100">Disponibilidad</div>
+                  <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>24/7</div>
+                  <div style={{ opacity: 0.9 }}>Disponibilidad</div>
                 </div>
               </div>
-              <p className="text-blue-100 leading-relaxed">
+              <p style={{ lineHeight: '1.6', opacity: 0.9 }}>
                 Nuestro equipo de soporte y profesionales médicos están disponibles en cualquier momento 
                 para atenderte, porque tu salud no espera.
               </p>
@@ -222,33 +189,29 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Lo que dicen nuestros usuarios
-            </h2>
-            <p className="text-xl text-gray-600">Miles de personas confían en nosotros</p>
+      <section className="testimonials">
+        <div className="container">
+          <div className="section-header">
+            <h2 className="section-title">Lo que dicen nuestros usuarios</h2>
+            <p className="section-subtitle">Miles de personas confían en nosotros</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="testimonials-grid">
             {testimonials.map((testimonial, idx) => (
-              <div key={idx} className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow">
-                <div className="flex gap-1 mb-4">
+              <div key={idx} className="testimonial-card fade-in-up">
+                <div className="testimonial-rating">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className="text-yellow-400 text-xl">⭐</span>
+                    <span key={i} className="star">⭐</span>
                   ))}
                 </div>
-                <p className="text-gray-700 text-lg mb-6 italic">
-                  "{testimonial.comment}"
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-green-500 flex items-center justify-center text-white font-bold text-xl">
+                <p className="testimonial-text">"{testimonial.comment}"</p>
+                <div className="testimonial-author">
+                  <div className="author-avatar">
                     {testimonial.name.charAt(0)}
                   </div>
-                  <div>
-                    <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                    <div className="text-sm text-gray-500">{testimonial.role}</div>
+                  <div className="author-info">
+                    <div className="author-name">{testimonial.name}</div>
+                    <div className="author-role">{testimonial.role}</div>
                   </div>
                 </div>
               </div>
@@ -258,18 +221,13 @@ export default function Home() {
       </section>
 
       {/* CTA Final */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-green-600">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Comienza tu viaje hacia una mejor salud
-          </h2>
-          <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+      <section className="cta">
+        <div className="container">
+          <h2 className="cta-title">Comienza tu viaje hacia una mejor salud</h2>
+          <p className="cta-subtitle">
             Únete a miles de usuarios que ya transformaron su experiencia médica
           </p>
-          <Link 
-            href="/auth/login"
-            className="inline-block bg-white text-blue-600 px-10 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 hover:scale-105"
-          >
+          <Link href="/auth/login" className="cta-button">
             Crear cuenta gratis
           </Link>
         </div>

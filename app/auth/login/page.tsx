@@ -1,4 +1,3 @@
-// app/auth/login/page.tsx
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -22,7 +21,7 @@ export default function LoginPage() {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-    setError(''); // Limpiar error al cambiar
+    setError('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -31,7 +30,6 @@ export default function LoginPage() {
     setIsLoading(true);
     
     try {
-      // Usar NextAuth para el login
       const result = await signIn('credentials', {
         email: formData.email,
         password: formData.password,
@@ -41,7 +39,6 @@ export default function LoginPage() {
       if (result?.error) {
         setError('Credenciales inválidas. Verifica tu email y contraseña.');
       } else {
-        // Login exitoso - redirigir al dashboard
         alert('¡Inicio de sesión exitoso!');
         router.push('/dashboard');
       }
@@ -54,26 +51,23 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-green-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="auth-container">
+      <div className="auth-card">
         {/* Header */}
-        <div className="text-center">
-          <Link href="/" className="inline-flex items-center gap-2 mb-8">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-600 to-green-600 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">🩺</span>
+        <div className="auth-header">
+          <Link href="/" className="logo-link">
+            <div className="logo-icon">
+              <span>🩺</span>
             </div>
-            <span className="text-xl font-bold text-gray-900">Plataforma Médica</span>
+            <span className="logo-text">Plataforma Médica</span>
           </Link>
           
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">
+          <h2 className="auth-title">
             Iniciar Sesión
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="auth-subtitle">
             O{' '}
-            <Link 
-              href="/auth/register" 
-              className="font-medium text-blue-600 hover:text-blue-500 transition-colors"
-            >
+            <Link href="/auth/register" className="auth-link">
               crear una cuenta nueva
             </Link>
           </p>
@@ -81,17 +75,17 @@ export default function LoginPage() {
 
         {/* Error Message */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-            <p className="text-red-700 text-sm">{error}</p>
+          <div className="error-message">
+            <p>{error}</p>
           </div>
         )}
 
         {/* Login Form */}
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="bg-white rounded-2xl shadow-lg p-8 space-y-6">
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <div className="form-container">
             {/* Email Input */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">
                 Correo Electrónico
               </label>
               <input
@@ -102,14 +96,14 @@ export default function LoginPage() {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                className="form-input"
                 placeholder="tu@email.com"
               />
             </div>
 
             {/* Password Input */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <div className="form-group">
+              <label htmlFor="password" className="form-label">
                 Contraseña
               </label>
               <input
@@ -120,31 +114,28 @@ export default function LoginPage() {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                className="form-input"
                 placeholder="••••••••"
               />
             </div>
 
             {/* Remember Me & Forgot Password */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
+            <div className="form-options">
+              <div className="checkbox-group">
                 <input
                   id="rememberMe"
                   name="rememberMe"
                   type="checkbox"
                   checked={formData.rememberMe}
                   onChange={handleChange}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="checkbox"
                 />
-                <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-700">
+                <label htmlFor="rememberMe" className="checkbox-label">
                   Recordarme
                 </label>
               </div>
 
-              <Link 
-                href="/auth/forgot-password" 
-                className="text-sm text-blue-600 hover:text-blue-500 transition-colors"
-              >
+              <Link href="/auth/forgot-password" className="auth-link">
                 ¿Olvidaste tu contraseña?
               </Link>
             </div>
@@ -153,11 +144,11 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:transform-none disabled:hover:shadow-lg"
+              className="btn btn-primary auth-button"
             >
               {isLoading ? (
-                <div className="flex items-center justify-center gap-2">
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <div className="loading-spinner">
+                  <div className="spinner"></div>
                   Iniciando sesión...
                 </div>
               ) : (
@@ -166,43 +157,29 @@ export default function LoginPage() {
             </button>
 
             {/* Divider */}
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">O continuar con</span>
-              </div>
+            <div className="divider">
+              <span>O continuar con</span>
             </div>
 
             {/* Social Login */}
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                className="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                <span className="text-blue-600 text-lg mr-2">f</span>
+            <div className="social-buttons">
+              <button type="button" className="social-btn facebook-btn">
+                <span className="social-icon">f</span>
                 Facebook
               </button>
-              <button
-                type="button"
-                className="w-full inline-flex justify-center items-center py-3 px-4 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                <span className="text-red-600 text-lg mr-2">G</span>
+              <button type="button" className="social-btn google-btn">
+                <span className="social-icon">G</span>
                 Google
               </button>
             </div>
           </div>
 
           {/* User Type Selection */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">
+          <div className="professional-card">
+            <h3 className="professional-title">
               ¿Eres profesional de la salud?
             </h3>
-            <Link 
-              href="/auth/login/profesional"
-              className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 block text-center"
-            >
+            <Link href="/auth/login/profesional" className="btn btn-secondary professional-button">
               Acceso para Profesionales
             </Link>
           </div>
