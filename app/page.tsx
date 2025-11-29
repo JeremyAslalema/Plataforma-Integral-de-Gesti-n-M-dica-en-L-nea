@@ -44,56 +44,206 @@ export default function Home() {
     }
   ];
 
-  const benefits = [
-    "Ahorra tiempo con citas en línea",
-    "Reduce costos de desplazamiento",
-    "Acceso inmediato a especialistas",
-    "Historial médico siempre disponible"
-  ];
-
-  const testimonials = [
-    {
-      name: "María González",
-      role: "Paciente",
-      comment: "La plataforma cambió completamente mi experiencia médica. Todo es más rápido y accesible.",
-      rating: 5
+  // Estilos CSS en objeto para evitar problemas de carga
+  const styles = {
+    main: {
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #caf0f8 0%, #ffffff 50%, #90e0ef 100%)',
+      fontFamily: 'Arial, sans-serif'
     },
-    {
-      name: "Dr. Carlos Ruiz",
-      role: "Cardiólogo",
-      comment: "Herramienta indispensable para gestionar mi práctica médica de manera eficiente.",
-      rating: 5
+    hero: {
+      padding: '80px 20px',
+      textAlign: 'center' as const,
+      position: 'relative' as const
+    },
+    container: {
+      maxWidth: '1200px',
+      margin: '0 auto',
+      padding: '0 20px'
+    },
+    heroBadge: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '8px',
+      background: '#ffffff',
+      color: '#0077b6',
+      padding: '8px 16px',
+      borderRadius: '50px',
+      fontSize: '14px',
+      fontWeight: '600',
+      marginBottom: '30px',
+      boxShadow: '0 4px 6px -1px rgba(0, 119, 182, 0.1)'
+    },
+    heroTitle: {
+      fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+      fontWeight: '800',
+      lineHeight: '1.1',
+      marginBottom: '20px',
+      color: '#1e293b'
+    },
+    gradientText: {
+      background: 'linear-gradient(135deg, #0077b6, #00b4d8)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text'
+    },
+    heroSubtitle: {
+      fontSize: 'clamp(1.1rem, 2vw, 1.5rem)',
+      color: '#64748b',
+      maxWidth: '600px',
+      margin: '0 auto 40px',
+      lineHeight: '1.6'
+    },
+    ctaButtons: {
+      display: 'flex',
+      gap: '16px',
+      justifyContent: 'center',
+      flexWrap: 'wrap' as const,
+      marginBottom: '60px'
+    },
+    btn: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '8px',
+      padding: '16px 32px',
+      borderRadius: '12px',
+      fontWeight: '600',
+      textDecoration: 'none',
+      transition: 'all 0.3s ease',
+      border: 'none',
+      cursor: 'pointer',
+      fontSize: '16px'
+    },
+    btnPrimary: {
+      background: 'linear-gradient(135deg, #0077b6, #00b4d8)',
+      color: '#ffffff',
+      boxShadow: '0 4px 6px -1px rgba(0, 119, 182, 0.1)'
+    },
+    btnSecondary: {
+      background: '#ffffff',
+      color: '#0077b6',
+      boxShadow: '0 4px 6px -1px rgba(0, 119, 182, 0.1)'
+    },
+    statsGrid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+      gap: '20px',
+      maxWidth: '800px',
+      margin: '0 auto'
+    },
+    statCard: {
+      background: '#ffffff',
+      padding: '24px',
+      borderRadius: '12px',
+      textAlign: 'center' as const,
+      boxShadow: '0 4px 6px -1px rgba(0, 119, 182, 0.1)',
+      transition: 'transform 0.3s ease'
+    },
+    statValue: {
+      fontSize: '2rem',
+      fontWeight: '800',
+      color: '#0077b6',
+      marginBottom: '8px'
+    },
+    statLabel: {
+      fontSize: '14px',
+      color: '#64748b',
+      fontWeight: '500'
+    },
+    section: {
+      padding: '80px 0',
+      background: '#ffffff'
+    },
+    sectionHeader: {
+      textAlign: 'center' as const,
+      marginBottom: '60px'
+    },
+    sectionTitle: {
+      fontSize: 'clamp(2rem, 4vw, 3rem)',
+      fontWeight: '800',
+      color: '#1e293b',
+      marginBottom: '16px'
+    },
+    sectionSubtitle: {
+      fontSize: '1.2rem',
+      color: '#64748b',
+      maxWidth: '600px',
+      margin: '0 auto'
+    },
+    featuresGrid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+      gap: '30px'
+    },
+    featureCard: {
+      background: '#ffffff',
+      padding: '32px',
+      borderRadius: '16px',
+      boxShadow: '0 4px 6px -1px rgba(0, 119, 182, 0.1)',
+      border: '1px solid #e2e8f0',
+      transition: 'all 0.3s ease'
+    },
+    featureIcon: {
+      width: '64px',
+      height: '64px',
+      borderRadius: '12px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '24px',
+      marginBottom: '20px',
+      background: 'linear-gradient(135deg, #0077b6, #00b4d8)',
+      color: '#ffffff'
+    },
+    featureTitle: {
+      fontSize: '1.5rem',
+      fontWeight: '700',
+      color: '#1e293b',
+      marginBottom: '12px'
+    },
+    featureDescription: {
+      color: '#64748b',
+      marginBottom: '16px',
+      lineHeight: '1.6'
+    },
+    featureStats: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      fontSize: '14px',
+      color: '#0077b6',
+      fontWeight: '600'
     }
-  ];
+  };
 
   return (
-    <main>
+    <main style={styles.main}>
       {/* Hero Section */}
-      <section className="hero">
-        <div className="container">
-          <div className="hero-badge">
+      <section style={styles.hero}>
+        <div style={styles.container}>
+          <div style={styles.heroBadge}>
             <span>🏆</span>
             Plataforma líder en salud digital
           </div>
 
-          <h1 className="hero-title">
+          <h1 style={styles.heroTitle}>
             Tu salud,{' '}
-            <span className="gradient-text">simplificada</span>
+            <span style={styles.gradientText}>simplificada</span>
           </h1>
           
-          <p className="hero-subtitle">
+          <p style={styles.heroSubtitle}>
             Conectamos pacientes y profesionales de la salud en un ecosistema digital seguro, 
             eficiente y centrado en tu bienestar
           </p>
 
           {/* CTA Buttons */}
-          <div className="cta-buttons">
-            <Link href="/auth/login?tipo=paciente" className="btn btn-primary">
+          <div style={styles.ctaButtons}>
+            <Link href="/auth/login?tipo=paciente" style={{...styles.btn, ...styles.btnPrimary}}>
               <span>👤</span>
               Soy Paciente
               <span>→</span>
             </Link>
-            <Link href="/auth/login?tipo=profesional" className="btn btn-secondary">
+            <Link href="/auth/login?tipo=profesional" style={{...styles.btn, ...styles.btnSecondary}}>
               <span>🩺</span>
               Soy Profesional
               <span>→</span>
@@ -101,16 +251,16 @@ export default function Home() {
           </div>
 
           {/* Stats */}
-          <div className="stats-grid">
+          <div style={styles.statsGrid}>
             {[
               { value: "50K+", label: "Pacientes activos" },
               { value: "1000+", label: "Profesionales" },
               { value: "99.9%", label: "Uptime" },
               { value: "4.9/5", label: "Valoración" }
             ].map((stat, idx) => (
-              <div key={idx} className="stat-card fade-in-up">
-                <div className="stat-value">{stat.value}</div>
-                <div className="stat-label">{stat.label}</div>
+              <div key={idx} style={styles.statCard}>
+                <div style={styles.statValue}>{stat.value}</div>
+                <div style={styles.statLabel}>{stat.label}</div>
               </div>
             ))}
           </div>
@@ -118,118 +268,38 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="features">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Todo lo que necesitas en un solo lugar</h2>
-            <p className="section-subtitle">
+      <section style={styles.section}>
+        <div style={styles.container}>
+          <div style={styles.sectionHeader}>
+            <h2 style={styles.sectionTitle}>Todo lo que necesitas en un solo lugar</h2>
+            <p style={styles.sectionSubtitle}>
               Herramientas profesionales diseñadas para mejorar tu experiencia en salud
             </p>
           </div>
 
-          <div className="features-grid">
+          <div style={styles.featuresGrid}>
             {features.map((feature, idx) => (
               <div
                 key={idx}
-                className="feature-card fade-in-up"
+                style={styles.featureCard}
                 onMouseEnter={() => setHoveredCard(idx)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                <div className="feature-icon">
+                <div style={styles.featureIcon}>
                   {feature.icon}
                 </div>
                 
-                <h3 className="feature-title">{feature.title}</h3>
+                <h3 style={styles.featureTitle}>{feature.title}</h3>
                 
-                <p className="feature-description">{feature.description}</p>
+                <p style={styles.featureDescription}>{feature.description}</p>
 
-                <div className="feature-stats">
+                <div style={styles.featureStats}>
                   <span>✓</span>
                   {feature.stats}
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="benefits">
-        <div className="container">
-          <div className="benefits-grid">
-            <div>
-              <h2 className="benefits-title">¿Por qué elegirnos?</h2>
-              <p className="benefits-subtitle">
-                Transformamos la atención médica con tecnología de vanguardia y un enfoque humano
-              </p>
-              <ul className="benefits-list">
-                {benefits.map((benefit, idx) => (
-                  <li key={idx} className="benefit-item">
-                    <span className="benefit-icon">✓</span>
-                    <span>{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="benefit-card">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
-                <span style={{ fontSize: '3rem' }}>🕐</span>
-                <div>
-                  <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>24/7</div>
-                  <div style={{ opacity: 0.9 }}>Disponibilidad</div>
-                </div>
-              </div>
-              <p style={{ lineHeight: '1.6', opacity: 0.9 }}>
-                Nuestro equipo de soporte y profesionales médicos están disponibles en cualquier momento 
-                para atenderte, porque tu salud no espera.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="testimonials">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">Lo que dicen nuestros usuarios</h2>
-            <p className="section-subtitle">Miles de personas confían en nosotros</p>
-          </div>
-
-          <div className="testimonials-grid">
-            {testimonials.map((testimonial, idx) => (
-              <div key={idx} className="testimonial-card fade-in-up">
-                <div className="testimonial-rating">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className="star">⭐</span>
-                  ))}
-                </div>
-                <p className="testimonial-text">"{testimonial.comment}"</p>
-                <div className="testimonial-author">
-                  <div className="author-avatar">
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div className="author-info">
-                    <div className="author-name">{testimonial.name}</div>
-                    <div className="author-role">{testimonial.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Final */}
-      <section className="cta">
-        <div className="container">
-          <h2 className="cta-title">Comienza tu viaje hacia una mejor salud</h2>
-          <p className="cta-subtitle">
-            Únete a miles de usuarios que ya transformaron su experiencia médica
-          </p>
-          <Link href="/auth/login" className="cta-button">
-            Crear cuenta gratis
-          </Link>
         </div>
       </section>
     </main>
