@@ -1,9 +1,9 @@
-// app/components/forms/login-form.tsx
 'use client';
 
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -20,23 +20,37 @@ export default function LoginForm() {
     setLoading(true);
     setError('');
 
+    // Validaciones del frontend
+    if (!formData.email || !formData.password) {
+      setError('Por favor completa todos los campos requeridos');
+      setLoading(false);
+      return;
+    }
+
     try {
       const result = await signIn('credentials', {
-        email: formData.email,
+        email: formData.email.trim().toLowerCase(),
         password: formData.password,
         redirect: false,
       });
 
       if (result?.error) {
-        setError('Credenciales inválidas. Verifica tu email y contraseña.');
+        // Mensajes de error más específicos
+        if (result.error.includes('contraseña')) {
+          setError('Contraseña incorrecta. Verifica tus credenciales.');
+        } else if (result.error.includes('usuario')) {
+          setError('No existe una cuenta con este email.');
+        } else {
+          setError('Credenciales inválidas. Verifica tu email y contraseña.');
+        }
       } else {
-        // Login exitoso - redirigir al dashboard
-        alert('¡Inicio de sesión exitoso!');
+        // Login exitoso
+        console.log('Login exitoso, redirigiendo...');
         router.push('/dashboard');
       }
     } catch (error) {
-      setError('Error de conexión. Intenta nuevamente.');
-      console.error('Login error:', error);
+      console.error('Error en login:', error);
+      setError('Error de conexión. Por favor, intenta nuevamente.');
     } finally {
       setLoading(false);
     }
@@ -44,83 +58,137 @@ export default function LoginForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
+    setFormData(prev => ({
+      ...prev,
       [name]: type === 'checkbox' ? checked : value
-    });
-    setError(''); // Limpiar error al cambiar
+    }));
+    
+    // Limpiar error cuando el usuario empiece a escribir
+    if (error) setError('');
+  };
+
+  const handleForgotPassword = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // TODO: Implementar recuperación de contraseña
+    alert('Funcionalidad de recuperación de contraseña en desarrollo');
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="auth-form">
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-          <p className="text-red-700 text-sm">{error}</p>
+        <div className="form-error">
+          <div className="error-icon">⚠️</div>
+          <div className="error-content">
+            <strong>Error de autenticación</strong>
+            <span>{error}</span>
+          </div>
         </div>
       )}
 
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          Correo Electrónico
+      <div className="form-group">
+        <label htmlFor="email" className="form-label">
+          <span>Correo Electrónico</span>
+          <span className="required-asterisk">*</span>
         </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          placeholder="tu@email.com"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-          Contraseña
-        </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          placeholder="••••••••"
-        />
-      </div>
-
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
+        <div className="input-container">
           <input
-            id="rememberMe"
-            name="rememberMe"
-            type="checkbox"
-            checked={formData.rememberMe}
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
-            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            required
+            className="form-input"
+            placeholder="tu.email@ejemplo.com"
+            disabled={loading}
+            autoComplete="email"
           />
-          <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-700">
-            Recordarme
+          <div className="input-icon">📧</div>
+        </div>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="password" className="form-label">
+          <span>Contraseña</span>
+          <span className="required-asterisk">*</span>
+        </label>
+        <div className="input-container">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            className="form-input"
+            placeholder="••••••••"
+            disabled={loading}
+            autoComplete="current-password"
+            minLength={6}
+          />
+          <div className="input-icon">🔒</div>
+        </div>
+        <div className="password-requirements">
+          Mínimo 6 caracteres
+        </div>
+      </div>
+
+      <div className="form-options">
+        <div className="checkbox-group">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              name="rememberMe"
+              checked={formData.rememberMe}
+              onChange={handleChange}
+              disabled={loading}
+              className="checkbox-input"
+            />
+            <span className="checkbox-custom"></span>
+            <span className="checkbox-text">Recordar sesión</span>
           </label>
         </div>
 
-        <a 
-          href="/auth/forgot-password" 
-          className="text-sm text-blue-600 hover:text-blue-500"
+        <button
+          type="button"
+          onClick={handleForgotPassword}
+          className="forgot-password-link"
+          disabled={loading}
         >
           ¿Olvidaste tu contraseña?
-        </a>
+        </button>
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+        className={`submit-button ${loading ? 'loading' : ''}`}
       >
-        {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+        {loading ? (
+          <>
+            <div className="button-spinner"></div>
+            Iniciando sesión...
+          </>
+        ) : (
+          <>
+            <span className="button-icon">→</span>
+            Iniciar Sesión
+          </>
+        )}
       </button>
+
+      <div className="form-footer">
+        <p className="form-footer-text">
+          Al iniciar sesión, aceptas nuestros{' '}
+          <Link href="/terminos" className="form-footer-link">
+            Términos de servicio
+          </Link>{' '}
+          y{' '}
+          <Link href="/privacidad" className="form-footer-link">
+            Política de privacidad
+          </Link>
+        </p>
+      </div>
     </form>
   );
 }
