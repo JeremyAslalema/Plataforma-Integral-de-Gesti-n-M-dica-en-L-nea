@@ -2,16 +2,26 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import LoginForm from '@/app/components/forms/login-form';
 
 export default function LoginPage() {
   const searchParams = useSearchParams();
   const tipo = searchParams.get('tipo') || 'paciente';
   const [mounted, setMounted] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    // Aquí iría la lógica de autenticación
+    setTimeout(() => setLoading(false), 1500);
+  };
 
   if (!mounted) {
     return (
@@ -42,14 +52,17 @@ export default function LoginPage() {
               Iniciar Sesión
             </h1>
             <p className="auth-subtitle">
-              {tipo === 'profesional' ? 'Acceso para profesionales de la salud' : 'Bienvenido de vuelta'}
+              {tipo === 'profesional' 
+                ? 'Acceso para profesionales de la salud' 
+                : 'Bienvenido de vuelta'}
             </p>
           </div>
 
           <div className="auth-switch">
             <p className="auth-switch-text">
               ¿No tienes cuenta?{' '}
-              <Link href="/auth/register" className="auth-link auth-link-underline">
+              <Link href={`/auth/register${tipo === 'profesional' ? '?tipo=profesional' : ''}`} 
+                className="auth-link auth-link-underline">
                 Regístrate aquí
               </Link>
             </p>
@@ -58,10 +71,96 @@ export default function LoginPage() {
 
         {/* Login Form */}
         <div className="auth-form-container">
-          <LoginForm />
+          <form onSubmit={handleSubmit} className="login-form">
+            <div className="form-group">
+              <label className="form-label">
+                Correo Electrónico *
+                <span className="required-asterisk">*</span>
+              </label>
+              <div className="input-container">
+                <input
+                  type="email"
+                  className="form-input"
+                  placeholder="tu.email@ejemplo.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <span className="input-icon">📧</span>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">
+                Contraseña *
+                <span className="required-asterisk">*</span>
+              </label>
+              <div className="input-container">
+                <input
+                  type="password"
+                  className="form-input"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                />
+                <span className="input-icon">🔒</span>
+              </div>
+              <div className="password-strength">
+                <div className="strength-text">Mínimo 6 caracteres</div>
+              </div>
+            </div>
+
+            <div className="form-options">
+              <div className="remember-me">
+                <input
+                  type="checkbox"
+                  id="remember"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="checkbox-input"
+                />
+                <label htmlFor="remember" className="checkbox-label">
+                  <div className="checkbox-custom"></div>
+                  <span>Recordar sesión</span>
+                </label>
+              </div>
+              <Link href="/auth/forgot-password" className="forgot-password">
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </div>
+
+            <button 
+              type="submit" 
+              className="submit-button"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <div className="button-spinner"></div>
+                  <span>Iniciando sesión...</span>
+                </>
+              ) : (
+                <>
+                  <span>→</span>
+                  <span>Iniciar Sesión</span>
+                </>
+              )}
+            </button>
+
+            <div className="form-footer">
+              <p className="text-sm text-gray">
+                Al iniciar sesión, aceptas nuestros{' '}
+                <Link href="/terms" className="terms-link">Términos de servicio</Link>{' '}
+                y{' '}
+                <Link href="/privacy" className="terms-link">Política de privacidad</Link>
+              </p>
+            </div>
+          </form>
         </div>
 
-        {/* Additional Options */}
+        {/* Social Login */}
         <div className="auth-options">
           <div className="divider">
             <span>o continuar con</span>
@@ -70,7 +169,7 @@ export default function LoginPage() {
           <div className="social-buttons">
             <button type="button" className="social-btn google-btn">
               <span className="social-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24">
+                <svg width="16" height="16" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                   <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                   <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
@@ -82,7 +181,7 @@ export default function LoginPage() {
             
             <button type="button" className="social-btn microsoft-btn">
               <span className="social-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24">
+                <svg width="16" height="16" viewBox="0 0 24 24">
                   <path fill="#f25022" d="M1 1h10v10H1V1z"/>
                   <path fill="#00a4ef" d="M1 13h10v10H1V13z"/>
                   <path fill="#7fba00" d="M13 1h10v10H13V1z"/>

@@ -91,5 +91,6 @@ plataforma-medica/
 ├── 📄 package.json                   # Dependencias y scripts
 ├── 📄 postcss.config.mjs             # Configuración PostCSS
 ├── 📄 README.md                      # Documentación del proyecto
+├── 📄 tailwind.config.js             # Configuración Tailwind CSS
 ├── 📄 tsconfig.json                  # Configuración TypeScript
 └── 📄 vercel.json                    # Configuración Vercel

@@ -100,7 +100,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
-      {/* Hero Section */}
+      {/* Hero Section - PERFECTAMENTE CENTRADA */}
       <section className="hero">
         <div className="container">
           <div className="hero-badge fade-in-up">
@@ -190,7 +190,7 @@ export default function Home() {
       <section className="benefits">
         <div className="container">
           <div className="benefits-grid">
-            <div>
+            <div className="benefits-content">
               <h2 className="benefits-title">
                 Beneficios Tangibles para Tu Salud
               </h2>
@@ -209,18 +209,18 @@ export default function Home() {
             </div>
             
             <div className="benefit-card fade-in-up">
-              <h3 className="feature-title" style={{ color: 'white', marginBottom: '20px' }}>
+              <h3 className="feature-title" style={{ color: 'white', marginBottom: '1.5rem', fontSize: '1.5rem' }}>
                 ¿Por qué elegirnos?
               </h3>
-              <div className="feature-description" style={{ color: 'rgba(255,255,255,0.9)' }}>
-                <p style={{ marginBottom: '15px' }}>
-                  <strong>Tecnología de Vanguardia:</strong> Plataforma desarrollada con los más altos estándares de seguridad y usabilidad.
+              <div className="feature-description" style={{ color: 'rgba(255,255,255,0.9)', fontSize: '1rem' }}>
+                <p style={{ marginBottom: '1rem' }}>
+                  <strong style={{ color: 'white' }}>Tecnología de Vanguardia:</strong> Plataforma desarrollada con los más altos estándares de seguridad y usabilidad.
                 </p>
-                <p style={{ marginBottom: '15px' }}>
-                  <strong>Equipo Médico Certificado:</strong> Todos nuestros profesionales están verificados y cuentan con certificaciones vigentes.
+                <p style={{ marginBottom: '1rem' }}>
+                  <strong style={{ color: 'white' }}>Equipo Médico Certificado:</strong> Todos nuestros profesionales están verificados y cuentan con certificaciones vigentes.
                 </p>
                 <p>
-                  <strong>Soporte 24/7:</strong> Asistencia técnica y médica disponible cuando la necesites.
+                  <strong style={{ color: 'white' }}>Soporte 24/7:</strong> Asistencia técnica y médica disponible cuando la necesites.
                 </p>
               </div>
             </div>
@@ -292,67 +292,40 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{ 
-        background: 'var(--dark-text)', 
-        color: 'white', 
-        padding: '40px 0',
-        textAlign: 'center' 
-      }}>
+      {/* Footer - ACTUALIZADO */}
+      <footer>
         <div className="container">
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '20px'
-          }}>
-            <div style={{ textAlign: 'left' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
-                <div className="logo-icon" style={{ width: '40px', height: '40px' }}>
+          <div className="footer-main">
+            <div className="footer-brand">
+              <Link href="/" className="footer-logo">
+                <div className="footer-logo-icon">
                   <span>🩺</span>
                 </div>
-                <span style={{ fontSize: '1.2rem', fontWeight: '700' }}>Plataforma Médica</span>
-              </div>
-              <p style={{ fontSize: '0.9rem', opacity: '0.8' }}>
+                <span className="footer-logo-text">Plataforma Médica</span>
+              </Link>
+              <p className="footer-tagline">
                 Transformando la experiencia en salud mediante tecnología innovadora
               </p>
             </div>
             
-            <div style={{ display: 'flex', gap: '30px', flexWrap: 'wrap' }}>
-              <div>
-                <h4 style={{ marginBottom: '10px', fontSize: '1rem' }}>Enlaces Rápidos</h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '0.9rem' }}>
-                  <Link href="/auth/login" style={{ color: 'white', opacity: '0.8', textDecoration: 'none' }}>
-                    Iniciar Sesión
-                  </Link>
-                  <Link href="/auth/register" style={{ color: 'white', opacity: '0.8', textDecoration: 'none' }}>
-                    Registrarse
-                  </Link>
-                  <Link href="/dashboard" style={{ color: 'white', opacity: '0.8', textDecoration: 'none' }}>
-                    Dashboard
-                  </Link>
-                </div>
+            <div className="footer-links">
+              <div className="footer-column">
+                <h4>Enlaces Rápidos</h4>
+                <Link href="/auth/login">Iniciar Sesión</Link>
+                <Link href="/auth/register">Registrarse</Link>
+                <Link href="/dashboard">Dashboard</Link>
               </div>
               
-              <div>
-                <h4 style={{ marginBottom: '10px', fontSize: '1rem' }}>Soporte</h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '0.9rem' }}>
-                  <a href="#" style={{ color: 'white', opacity: '0.8', textDecoration: 'none' }}>Centro de Ayuda</a>
-                  <a href="#" style={{ color: 'white', opacity: '0.8', textDecoration: 'none' }}>Contacto</a>
-                  <a href="#" style={{ color: 'white', opacity: '0.8', textDecoration: 'none' }}>Preguntas Frecuentes</a>
-                </div>
+              <div className="footer-column">
+                <h4>Soporte</h4>
+                <a href="#">Centro de Ayuda</a>
+                <a href="#">Contacto</a>
+                <a href="#">Preguntas Frecuentes</a>
               </div>
             </div>
           </div>
           
-          <div style={{ 
-            marginTop: '30px', 
-            paddingTop: '20px', 
-            borderTop: '1px solid rgba(255,255,255,0.1)',
-            fontSize: '0.8rem',
-            opacity: '0.6'
-          }}>
+          <div className="footer-bottom">
             <p>© 2024 Plataforma Médica Integral. Todos los derechos reservados.</p>
           </div>
         </div>
