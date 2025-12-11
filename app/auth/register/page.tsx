@@ -9,6 +9,8 @@ export default function RegisterPage() {
   const tipo = searchParams.get('tipo') || 'paciente';
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   
   // Form state
   const [formData, setFormData] = useState({
@@ -47,29 +49,83 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
+    setSuccess('');
     
     // Validaciones básicas
     if (formData.password !== formData.confirmPassword) {
-      alert('Las contraseñas no coinciden');
+      setError('Las contraseñas no coinciden');
       setLoading(false);
       return;
     }
     
     if (!formData.termsAccepted) {
-      alert('Debes aceptar los términos y condiciones');
+      setError('Debes aceptar los términos y condiciones');
       setLoading(false);
       return;
     }
 
-    // Aquí iría la llamada a la API para registrar al usuario
-    console.log('Datos del registro:', formData);
-    
-    // Simulación de registro
-    setTimeout(() => {
+    // ✅ CORRECCIÓN: LLAMAR AL API REAL
+    try {
+      console.log('Enviando datos al API:', formData);
+      
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          name: formData.name,
+          role: formData.role,
+          phone: formData.phone || undefined,
+          dateOfBirth: formData.dateOfBirth || undefined,
+          gender: formData.gender || undefined,
+          address: formData.address || undefined,
+          specialty: formData.specialty || undefined,
+          license: formData.license || undefined,
+          bio: formData.bio || undefined
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Error al registrar usuario');
+      }
+
+      // Registro exitoso
+      setSuccess('¡Cuenta creada exitosamente! Redirigiendo al login...');
+      
+      // Limpiar formulario
+      setFormData({
+        role: formData.role,
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        phone: '',
+        dateOfBirth: '',
+        gender: '',
+        address: '',
+        specialty: '',
+        license: '',
+        bio: '',
+        termsAccepted: false
+      });
+
+      // Redirigir al login después de 2 segundos
+      setTimeout(() => {
+        router.push('/auth/login');
+      }, 2000);
+
+    } catch (err: any) {
+      console.error('Error en registro:', err);
+      setError(err.message || 'Error al registrar usuario');
+    } finally {
       setLoading(false);
-      // Redirigir al dashboard después del registro
-      router.push('/auth/login');
-    }, 2000);
+    }
   };
 
   if (!mounted) {
@@ -116,6 +172,21 @@ export default function RegisterPage() {
             </p>
           </div>
         </div>
+
+        {/* Mensajes de éxito/error */}
+        {error && (
+          <div className="auth-message error">
+            <div className="message-icon">❌</div>
+            <div className="message-text">{error}</div>
+          </div>
+        )}
+        
+        {success && (
+          <div className="auth-message success">
+            <div className="message-icon">✅</div>
+            <div className="message-text">{success}</div>
+          </div>
+        )}
 
         {/* Register Form */}
         <div className="auth-form-container">

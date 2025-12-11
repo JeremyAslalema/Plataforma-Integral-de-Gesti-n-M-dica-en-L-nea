@@ -1905,3 +1905,35 @@ footer .container {
 .bg-gradient-to-br {
   background: linear-gradient(135deg, #caf0f8 0%, #ffffff 100%) !important;
 }
+
+
+
+
+
+
+/* Mensajes de éxito/error */
+.auth-message {
+  margin: 0 1rem 1rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.auth-message.error {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  color: #c00;
+}
+
+.auth-message.success {
+  background-color: #efe;
+  border: 1px solid #cfc;
+  color: #0a0;
+}
+
+.message-icon {
+  font-size: 1rem;
+}
