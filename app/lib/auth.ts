@@ -1,30 +1,28 @@
-import { NextAuthOptions } from 'next-auth';
+import { NextAuthOptions, DefaultSession } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from './prisma';
 import bcrypt from 'bcryptjs';
+import { UserRole } from '@prisma/client';
 
 // Extender tipos de NextAuth
 declare module 'next-auth' {
   interface User {
-    role?: string;
-    name: string;
+    role?: UserRole;
   }
 
   interface Session {
     user: {
       id: string;
-      email?: string | null;
-      name?: string | null;
-      image?: string | null;
-      role?: string;
-    }
+      role?: UserRole;
+    } & DefaultSession['user'];
   }
 }
 
 declare module 'next-auth/jwt' {
   interface JWT {
-    role?: string;
+    id?: string;
+    role?: UserRole;
   }
 }
 
@@ -36,8 +34,7 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         email: { 
           label: 'Email', 
-          type: 'email', 
-          placeholder: 'correo@ejemplo.com' 
+          type: 'email'
         },
         password: { 
           label: 'Contraseña', 
@@ -80,7 +77,7 @@ export const authOptions: NextAuthOptions = {
           };
         } catch (error) {
           console.error('Error en autenticación:', error);
-          throw new Error('Error en el servidor. Intente nuevamente.');
+          return null;
         }
       }
     })
@@ -91,29 +88,24 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: '/auth/login',
-    // signUp: '/auth/register', // ← ELIMINA ESTA LÍNEA TEMPORALMENTE
     error: '/auth/login',
   },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.id = user.id;
         token.role = user.role;
       }
       return token;
     },
     async session({ session, token }) {
-      if (session.user && token.sub) {
-        session.user.id = token.sub;
-        session.user.role = token.role as string;
+      if (session.user && token.id) {
+        session.user.id = token.id as string;
+        session.user.role = token.role as UserRole;
       }
       return session;
-    },
-    async redirect({ url, baseUrl }) {
-      // Redirigir al dashboard después del login
-      if (url.startsWith('/dashboard')) return url;
-      if (url.startsWith(baseUrl)) return url;
-      return baseUrl + '/dashboard';
     }
   },
+  secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === 'development',
 };
